@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,11 +36,17 @@ public class OrderServices {
     }
 
     public Mono<Order> getOrderById(Long id) {
-        return orderRepo.getOrderByOrderId(id)
+         var product = orderRepo.getOrderByOrderId(id)
                 .map(order -> {
-                     order.setProductList(getProductById(order.getProductId()));
+                    var produ = getProductById(order.getProductId());
+                    var pro = produ.collectList();
+                    pro.subscribe(productList -> {
+                      order.setProductList(productList);
+                    });
                      return order;
                 });
+
+         return  product;
     }
 
 

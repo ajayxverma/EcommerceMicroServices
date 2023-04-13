@@ -21,5 +21,5 @@ public class Order {
     private Long customerId;
     private Long productId;
     @Transient
-    private Flux<Product> productList;
+    private List<Product> productList;
 }
