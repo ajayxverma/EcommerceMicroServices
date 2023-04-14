@@ -1,15 +1,5 @@
 server:
-  port: 8081
-
-spring:
-  r2dbc:
-    url: r2dbc:postgresql://localhost:5432/ecommerce
-    username: postgres
-    password: root
-  application:
-    name: Order-Service
-
-
+  port: 9001
 
 eureka:
   client:
@@ -20,3 +10,7 @@ eureka:
   instance:
     hostname: localhost
 
+hystrix:
+  dashboard:
+    proxy-stream-allow-list:
+      - "*"

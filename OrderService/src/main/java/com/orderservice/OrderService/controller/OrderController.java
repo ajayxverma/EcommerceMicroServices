@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @RestController
 public class OrderController {
 
@@ -25,7 +27,7 @@ public class OrderController {
     }
 
     @GetMapping("/product/{id}")
-    private Flux<Product> getProductById(@PathVariable Long id) {
+    private Mono<List<Product>> getProductById(@PathVariable Long id) {
         return orderServices.getProductById(id);
     }
 

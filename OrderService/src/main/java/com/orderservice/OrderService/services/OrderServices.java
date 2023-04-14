@@ -16,36 +16,42 @@ import java.util.List;
 
 @Service
 public class OrderServices {
+    @Autowired
+    private  WebClient.Builder webClientBuilder;
 
-    private final WebClient webClient;
+    /*public OrderServices(WebClient.Builder webClientBuilder){
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8082").build();
+    }*/
 
-    public OrderServices(WebClient.Builder webClientBuilder){
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8081").build();
-    }
+    private String getProductByIdUri = "http://localhost:8082/order-products/{id}";
     @Autowired
     private OrderRepo orderRepo;
 
-    public Flux<Product> getProductById(Long id) {
-        return webClient.get()
-                .uri("/order-products/{id}",id)
+    public Mono<List<Product>> getProductById(Long id) {
+        return webClientBuilder.build()
+                .get()
+                .uri(getProductByIdUri,id)
                 .retrieve()
-                .bodyToFlux(Product.class);
+                .bodyToFlux(Product.class)
+                .collectList();
     }
     public Flux<Order> getAllOrders() {
-        return orderRepo.findAll();
+        return orderRepo.findAll()
+                .flatMap(order -> getProductById(order.getProductId())
+                        .map(products -> {
+                            order.setProductList(products);
+                            return order;
+                        }));
     }
 
     public Mono<Order> getOrderById(Long id) {
          var product = orderRepo.getOrderByOrderId(id)
-                .map(order -> {
-                    var produ = getProductById(order.getProductId());
-                    var pro = produ.collectList();
-                    pro.subscribe(productList -> {
-                      order.setProductList(productList);
-                    });
-                     return order;
-                });
-
+                .flatMap(order ->
+                        getProductById(order.getProductId())
+                        .map(productList -> {
+                            order.setProductList(productList);
+                            return order;
+                        }));
          return  product;
     }
 
