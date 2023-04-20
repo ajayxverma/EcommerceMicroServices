@@ -10,22 +10,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderServices {
     @Autowired
-    private  WebClient.Builder webClientBuilder;
+    private WebClient.Builder webClientBuilder;
 
     /*public OrderServices(WebClient.Builder webClientBuilder){
         this.webClient = webClientBuilder.baseUrl("http://localhost:8082").build();
     }*/
 
-    private String getProductByIdUri = "http://localhost:8082/order-products/{id}";
+    private String getProductByIdUri = "http://product-service/order-products/{id}";
     @Autowired
     private OrderRepo orderRepo;
+
+    public OrderServices(WebClient.Builder webClientBuilder, OrderRepo orderRepo) {
+        this.webClientBuilder = webClientBuilder;
+        this.orderRepo = orderRepo;
+    }
 
     public Mono<List<Product>> getProductById(Long id) {
         return webClientBuilder.build()
@@ -77,4 +80,6 @@ public class OrderServices {
                 .then(Mono.just(new ResponseEntity<Order>(HttpStatus.OK)))
                 .defaultIfEmpty(new ResponseEntity<Order>(HttpStatus.NOT_FOUND));
     }
+
+
 }

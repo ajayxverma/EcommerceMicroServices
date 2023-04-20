@@ -10,6 +10,6 @@ import reactor.core.publisher.Flux;
 @Repository
 public interface ProductRepository extends R2dbcRepository<Product,Long> {
 
-    @Query("select * from product where product_id = :id")
+    @Query("select * from products where product_id = :id")
     public Flux<Product> findProductByProductId(Long id);
 }

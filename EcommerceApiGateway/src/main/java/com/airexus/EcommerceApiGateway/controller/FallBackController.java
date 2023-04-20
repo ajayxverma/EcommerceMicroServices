@@ -1,4 +1,4 @@
-package controller;
+package com.airexus.EcommerceApiGateway.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
