@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Hystrix-Dashboard" />
+        <module name="ecommerceconfigserver" />
         <module name="EcommerceApiGateway" />
         <module name="OrderService" />
         <module name="eureka-server" />
@@ -20,6 +21,7 @@
       <module name="EcommerceApiGateway" options="-parameters" />
       <module name="Hystrix-Dashboard" options="-parameters" />
       <module name="OrderService" options="-parameters" />
+      <module name="ecommerceconfigserver" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="productservice" options="-parameters" />
     </option>
