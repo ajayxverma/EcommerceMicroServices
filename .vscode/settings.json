@@ -1,0 +1,5 @@
+{
+  "yaml.schemas": {
+    "kubernetes://schema/v1%40service": "file:///d%3A/TechnologyLearning/Reactive%20Programming/EcommerceMicroServices/K8s/api-gateway-deployment.yaml"
+  }
+}

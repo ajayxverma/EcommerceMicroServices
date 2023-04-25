@@ -19,14 +19,11 @@ spring:
   config:
     import: configserver:${CONFIG_SERVER_URL:http://localhost:9296}
 
-#
 #management:
 #  endpoints:
 #    web:
 #      exposure:
 #        include: hystrix.stream
-
-
 
 #eureka:
 #  client:

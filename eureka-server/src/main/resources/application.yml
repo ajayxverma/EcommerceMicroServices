@@ -5,6 +5,8 @@ spring:
   application:
     name: eureka-server
 eureka:
+  instance:
+    hostname: "${HOSTNAME:localhost}.eureka"
   client:
     register-with-eureka: false
     fetch-registry: false
